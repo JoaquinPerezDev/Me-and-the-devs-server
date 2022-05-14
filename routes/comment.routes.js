@@ -3,13 +3,10 @@ const router = require("express").Router();
 const User = require("../models/User.model");
 const Article = require("../models/Article.model");
 const Comment = require("../models/Comment.model")
-const isLoggedIn = require("../middleware/isLoggedIn");
 
-router.post('/comments', isLoggedIn, (req, res, next) => {
+router.post('/comments',(req, res, next) => {
 
     const { author, content, articleId } = req.body;
-
-    let user = req.session.currentUser;
 
     Comment.create({ author, content, article: articleId})
     .then(newComment => {

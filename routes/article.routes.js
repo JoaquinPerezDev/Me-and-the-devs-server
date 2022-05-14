@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const Article = require('../models/Article.model');
 const User = require("../models/User.model");
 
-const isLoggedIn = require("../middleware/isLoggedIn");
 const { response } = require("../app");
 const { update } = require("../models/User.model");
 
@@ -17,10 +16,9 @@ router.get("/articles", (req, res, next) => {
 
 });
 
-router.post('/articles', isLoggedIn, (req, res, next) => {
+router.post('/articles', (req, res, next) => {
     const { title, content } = req.body;
 
-    // const author = req.session.currentUser._id;
 
         Article.create({ title, content })
         .then(dbArticle => {
@@ -63,7 +61,7 @@ router.get('/articles/:articleId', (req, res, next) => {
         .catch(err => res.json(err))
 });
 
-router.put('/articles/:articleId', isLoggedIn, (req, res, next) => {
+router.put('/articles/:articleId', (req, res, next) => {
     const { articleId } = req.params;
     
     if (!mongoose.Types.ObjectId.isValid(articleId)) {
@@ -77,7 +75,7 @@ router.put('/articles/:articleId', isLoggedIn, (req, res, next) => {
 });
 
 
-router.delete('/articles/:articleId', isLoggedIn, (req, res, next) => {
+router.delete('/articles/:articleId', (req, res, next) => {
     const { articleId } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(articleId)) {
@@ -92,7 +90,6 @@ router.delete('/articles/:articleId', isLoggedIn, (req, res, next) => {
 
 router.get('/articles/author/:userId', (req, res, next) => {
     const { userId } = req.params;
-    // const author = req.session.currentUser;
 console.log(userId)
     User.findById(userId)
         .populate('article')
