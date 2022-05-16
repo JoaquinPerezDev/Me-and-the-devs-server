@@ -47,24 +47,24 @@ module.exports = (app) => {
   app.use(cookieParser());
 
   // ℹ️ Middleware that adds a "req.session" information and later to check that you are who you say you are 😅
-  app.use(
-    session({
-      secret: process.env.SESSION_SECRET || "super hyper secret key",
-      resave: false,
-      saveUninitialized: false,
-      store: MongoStore.create({
-        mongoUrl: MONGO_URI,
-      }),
-      cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 365,
-        sameSite: "none",
-        secure: process.env.NODE_ENV === "production",
-      },
-    })
-  );
+  // app.use(
+  //   session({
+  //     secret: process.env.SESSION_SECRET || "super hyper secret key",
+  //     resave: false,
+  //     saveUninitialized: false,
+  //     store: MongoStore.create({
+  //       mongoUrl: MONGO_URI,
+  //     }),
+  //     cookie: {
+  //       maxAge: 1000 * 60 * 60 * 24 * 365,
+  //       sameSite: "none",
+  //       secure: process.env.NODE_ENV === "production",
+  //     },
+  //   })
+  // );
 
-  app.use((req, res, next) => {
-    req.user = req.session.user || null;
-    next();
-  });
+  // app.use((req, res, next) => {
+  //   req.user = req.session.user || null;
+  //   next();
+  // });
 };

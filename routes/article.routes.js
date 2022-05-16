@@ -2,6 +2,7 @@ const router = require("express").Router();
 const mongoose = require("mongoose");
 const Article = require('../models/Article.model');
 const User = require("../models/User.model");
+const fileUploader = require("../config/cloudinary.config");
 
 const { response } = require("../app");
 const { update } = require("../models/User.model");
@@ -32,6 +33,7 @@ router.post('/articles', (req, res, next) => {
 
 
 });
+
 
 // router.get('/articles', (req, res, next) => {
 //     Article.find()
