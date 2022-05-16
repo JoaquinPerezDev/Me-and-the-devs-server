@@ -67,7 +67,7 @@ router.post("/signup", (req, res, next) => {
     });
 });
 
-router.post("/upload", fileUploader.single("imageUrl"), (req, res, next) => {
+router.post("/upload", isAuthenticated, fileUploader.single("imageUrl"), (req, res, next) => {
   console.log(req.file)
   if(!req.file) {
     next(new Error("No file uploaded"));
