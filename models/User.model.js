@@ -6,13 +6,13 @@ const userSchema = new Schema(
     name: String,
     email: {
       type: String,
-      unique: true ,
+      unique: true,
       trim: true,
-      required: [true, 'Email is required.'],
+      required: [true, "Email is required."],
     },
-    password: { 
-    type: String,
-    required: [true, 'Password is required.'],
+    password: {
+      type: String,
+      required: [true, "Password is required."],
     },
     currentRole: String,
     aboutMe: String,
@@ -23,22 +23,22 @@ const userSchema = new Schema(
     experience: String,
     education: String,
     imageUrl: String,
-    project: [{
-      description: String,
-      projectLink: String,
-      features: String,
-      madeWith: String
-    }],
-    links: [{
-      gitHub: { type: String, default: 'none'},
-      linkedIn: { type: String, default: 'none'},
-      dev: { type: String, default: 'none'},
-      medium: { type: String, default: 'none'},
-      twitter: { type: String, default: 'none'}
+    // project: [{
+    //   description: String,
+    //   projectLink: String,
+    //   features: String,
+    //   madeWith: String
+    // }],
+    // links: [{
+    //   gitHub: { type: String, default: 'none'},
+    //   linkedIn: { type: String, default: 'none'},
+    //   dev: { type: String, default: 'none'},
+    //   medium: { type: String, default: 'none'},
+    //   twitter: { type: String, default: 'none'}
 
-    }],
-    article: [{ type: Schema.Types.ObjectId, ref: 'Article' }],
-    comment: [{ type: Schema.Types.ObjectId, ref: 'Comment' }]
+    // }],
+    article: [{ type: Schema.Types.ObjectId, ref: "Article" }],
+    comment: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

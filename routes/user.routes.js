@@ -14,7 +14,10 @@ router.get("/user/:userId", (req, res, next) => {
   }
 
   User.findById(userId)
-    .then((user) => res.status(200).json(user))
+    .then((user) => {
+      // console.log(user)
+      res.status(200).json(user)
+    })
     .catch((err) => res.json(err));
 });
 module.exports = router;
@@ -40,8 +43,10 @@ router.put("/user/:userId/edit", (req, res, next) => {
 //     return;
 //   }
 
-
   User.findByIdAndUpdate(userId, req.body, { new: true })
-    .then((updatedUser) => res.status(200).json(updatedUser))
+    .then((updatedUser) => {
+      console.log(updatedUser)
+      res.status(200).json(updatedUser)
+    })
     .catch((error) => res.json(error));
 });
