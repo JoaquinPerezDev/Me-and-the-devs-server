@@ -19,9 +19,17 @@ router.get("/user/:userId", (req, res, next) => {
 });
 module.exports = router;
 
-
 // this route will allow user to edit their profile info
 
-// router.put("/user/:userId", (req, res, next) => {
+router.put("/user/:userId/edit", (req, res, next) => {
+  const { userId } = req.params;
 
-// })
+  if (!mongoose.Types.ObjectId.isValid(UserId)) {
+    res.status(400).json({ message: "Specified id is not valid" });
+    return;
+  }
+
+  User.findByIdAndUpdate(userId, req.body, { new: true })
+    .then((updatedUser) => res.json(updatedUser))
+    .catch((error) => res.json(error));
+});

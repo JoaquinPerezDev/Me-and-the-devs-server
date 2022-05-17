@@ -6,7 +6,6 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const fileUploader = require("../config/cloudinary.config");
 
-
 const { isAuthenticated } = require("./../middleware/jwt.middleware.js"); // <== IMPORT
 
 // How many rounds should bcrypt run the salt (default [10 - 12 rounds])
@@ -67,14 +66,19 @@ router.post("/signup", (req, res, next) => {
     });
 });
 
-router.post("/upload", isAuthenticated, fileUploader.single("imageUrl"), (req, res, next) => {
-  console.log(req.file)
-  if(!req.file) {
-    next(new Error("No file uploaded"));
-    return;
+router.post(
+  "/upload",
+  isAuthenticated,
+  fileUploader.single("imageUrl"),
+  (req, res, next) => {
+    console.log(req.file);
+    if (!req.file) {
+      next(new Error("No file uploaded"));
+      return;
+    }
+    res.json({ fileUrl: req.file.path });
   }
-  res.json({ fileUrl: req.file.path });
-})
+);
 
 router.post("/login", (req, res, next) => {
   const { email, password } = req.body;
