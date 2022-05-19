@@ -37,7 +37,7 @@ const userSchema = new Schema(
     //   twitter: { type: String, default: 'none'}
 
     // }],
-    article: [{ type: Schema.Types.ObjectId, ref: "Article" }],
+    articles: [{ type: Schema.Types.ObjectId, ref: "Article" }],
     comment: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   },
   {

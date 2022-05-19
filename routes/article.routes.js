@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Article = require('../models/Article.model');
 const User = require("../models/User.model");
 const fileUploader = require("../config/cloudinary.config");
-
+const { isAuthenticated } = require("./../middleware/jwt.middleware.js"); 
 const { response } = require("../app");
 const { update } = require("../models/User.model");
 
@@ -17,15 +17,19 @@ router.get("/articles", (req, res, next) => {
 
 });
 
-router.post('/articles', (req, res, next) => {
+router.post('/articles/create', isAuthenticated, (req, res, next) => {
     const { title, content } = req.body;
+    const { id } = req.params;
+
+
+
 
 
         Article.create({ title, content })
-        .then(dbArticle => {
-            return User.findByIdAndUpdate(author, { $push: { articles: dbArticle._id } });
-        })
         .then(response => res.json(response))
+        .then(dbArticle => {
+            return User.findByIdAndUpdate(id, { $push: { articles: dbArticle._id } });
+        })
         .catch(err => {
             throw new Error(`Error while creating the post! ${err}`);
         });
@@ -63,7 +67,7 @@ router.get('/articles/:articleId', (req, res, next) => {
         .catch(err => res.json(err))
 });
 
-router.put('/articles/:articleId', (req, res, next) => {
+router.put('/articles/:articleId', isAuthenticated, (req, res, next) => {
     const { articleId } = req.params;
     
     if (!mongoose.Types.ObjectId.isValid(articleId)) {
@@ -77,7 +81,7 @@ router.put('/articles/:articleId', (req, res, next) => {
 });
 
 
-router.delete('/articles/:articleId', (req, res, next) => {
+router.delete('/articles/:articleId', isAuthenticated, (req, res, next) => {
     const { articleId } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(articleId)) {
@@ -90,9 +94,11 @@ router.delete('/articles/:articleId', (req, res, next) => {
     .catch(error => res.json(error));
 });
 
+
+
 router.get('/articles/author/:userId', (req, res, next) => {
     const { userId } = req.params;
-console.log(userId)
+
     User.findById(userId)
         .populate('article')
         .then(user => {

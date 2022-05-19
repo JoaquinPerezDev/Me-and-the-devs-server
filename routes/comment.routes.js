@@ -2,11 +2,12 @@ const router = require("express").Router();
 
 const User = require("../models/User.model");
 const Article = require("../models/Article.model");
-const Comment = require("../models/Comment.model")
+const Comment = require("../models/Comment.model");
+const { isAuthenticated } = require("../middleware/jwt.middleware");
 
-router.post('/comments',(req, res, next) => {
-
-    const { author, content, articleId } = req.body;
+router.post('/articles/:articleId/comment', isAuthenticated, (req, res, next) => {
+    const { articleId } = req.params;
+    const { author, content } = req.body;
 
     Comment.create({ author, content, article: articleId})
     .then(newComment => {

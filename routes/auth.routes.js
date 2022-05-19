@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const fileUploader = require("../config/cloudinary.config");
 
-const { isAuthenticated } = require("./../middleware/jwt.middleware.js"); // <== IMPORT
+const { isAuthenticated } = require("./../middleware/jwt.middleware.js"); 
 
 // How many rounds should bcrypt run the salt (default [10 - 12 rounds])
 const saltRounds = 10;

@@ -25,10 +25,10 @@ const userRouter = require("./routes/user.routes");
 app.use("/api", userRouter);
 
 const articleRouter = require("./routes/article.routes");
-app.use('/api', isAuthenticated, articleRouter);
+app.use('/api', articleRouter);
 
 const commentRouter = require("./routes/comment.routes");
-app.use('/api', isAuthenticated, commentRouter);
+app.use('/api', commentRouter);
 
 const authRouter = require("./routes/auth.routes");
 app.use("/auth", authRouter);
