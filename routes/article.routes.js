@@ -20,7 +20,7 @@ router.get("/articles", (req, res, next) => {
 
 router.post('/articles/create', isAuthenticated, (req, res, next) => {
     const { title, content, summary } = req.body;
-    const { id } = req.params;
+    const  id  = req.payload._id;
 
         Article.create({ title, content, summary })
         .then(response => res.json(response))
