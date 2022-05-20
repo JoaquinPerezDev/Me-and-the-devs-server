@@ -9,6 +9,9 @@ const articleSchema = new Schema(
     content: {
       type: String
     },
+    summary: {
+      type: String
+    },
     author: {type: Schema.Types.ObjectId, ref: 'User' },
     comments: [{type: Schema.Types.ObjectId, ref: 'Comment'}]
   },

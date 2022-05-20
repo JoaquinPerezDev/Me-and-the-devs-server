@@ -7,25 +7,22 @@ const { isAuthenticated } = require("./../middleware/jwt.middleware.js");
 const { response } = require("../app");
 const { update } = require("../models/User.model");
 
+
 router.get("/articles", (req, res, next) => {
 
-
-        // User.findById(req.session.currentUser._id)
         Article.find()
+        .populate('author')
         .then((allArticles) => res.json(allArticles))
         .catch((err) => console.log(`error while displaying the article: ${err}`));
 
 });
 
+
 router.post('/articles/create', isAuthenticated, (req, res, next) => {
-    const { title, content } = req.body;
+    const { title, content, summary } = req.body;
     const { id } = req.params;
 
-
-
-
-
-        Article.create({ title, content })
+        Article.create({ title, content, summary })
         .then(response => res.json(response))
         .then(dbArticle => {
             return User.findByIdAndUpdate(id, { $push: { articles: dbArticle._id } });
@@ -33,18 +30,9 @@ router.post('/articles/create', isAuthenticated, (req, res, next) => {
         .catch(err => {
             throw new Error(`Error while creating the post! ${err}`);
         });
-    
-
 
 });
 
-
-// router.get('/articles', (req, res, next) => {
-//     Article.find()
-//         .populate('author')
-//         .then(allArticles => res.json(allArticles))
-//         .catch(err => res.json(err));
-// });
 
 router.get('/articles/:articleId', (req, res, next) => {
     const { articleId } = req.params;
@@ -66,6 +54,7 @@ router.get('/articles/:articleId', (req, res, next) => {
         .then(article => res.status(200).json(article))
         .catch(err => res.json(err))
 });
+
 
 router.put('/articles/:articleId', isAuthenticated, (req, res, next) => {
     const { articleId } = req.params;
@@ -94,19 +83,6 @@ router.delete('/articles/:articleId', isAuthenticated, (req, res, next) => {
     .catch(error => res.json(error));
 });
 
-
-
-router.get('/articles/author/:userId', (req, res, next) => {
-    const { userId } = req.params;
-
-    User.findById(userId)
-        .populate('article')
-        .then(user => {
-            console.log(user)
-            res.render('posts/author-posts', { article: user.article })
-        })
-        .catch(error => console.log(error));
-});
 
 module.exports = router;
 
