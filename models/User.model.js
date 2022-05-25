@@ -24,18 +24,20 @@ const userSchema = new Schema(
     experience: String,
     education: String,
     imageUrl: String,
-    project: [{
-      description: String,
-      projectLink: String,
-      features: String,
-      madeWith: String
-    }],
+    project: [
+      {
+        description: String,
+        projectLink: String,
+        features: String,
+        madeWith: String,
+      },
+    ],
     link: {
-      gitHub: { type: String, default: 'none'},
-      linkedIn: { type: String, default: 'none'},
-      dev: { type: String, default: 'none'},
-      medium: { type: String, default: 'none'},
-      twitter: { type: String, default: 'none'}
+      gitHub: { type: String, default: "none" },
+      linkedIn: { type: String, default: "none" },
+      dev: { type: String, default: "none" },
+      medium: { type: String, default: "none" },
+      twitter: { type: String, default: "none" },
     },
     articles: [{ type: Schema.Types.ObjectId, ref: "Article" }],
     comment: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
